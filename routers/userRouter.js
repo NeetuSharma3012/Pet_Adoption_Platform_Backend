@@ -3,7 +3,7 @@ const Model = require('../models/UserModel');
 
 const router = express.Router();
 
-router.get('/add' , (req,res) => {
+router.post('/add' , (req,res) => {
     console.log(req.body);
 
     new Model (req.body).save()
@@ -25,7 +25,6 @@ router.get('/add' , (req,res) => {
 
 router.get('/getall', (req, res) => {
     Model.find()
-
     .then((result) => {
         res.status(200).json(result);
     }).catch((err) => {

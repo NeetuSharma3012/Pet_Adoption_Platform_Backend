@@ -1,5 +1,6 @@
 const express = require('express');
 const userRout = require('./routers/userRouter');
+const petRout = require('./routers/petRouter')
 const cors = require('cors');
 
 //creating an express app
@@ -16,6 +17,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use('/user', userRout);
+app.use('/pet', petRout );
 
 //route or endpoint
 app.get('/',(req, res) => {
