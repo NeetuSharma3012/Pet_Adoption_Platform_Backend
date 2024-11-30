@@ -17,7 +17,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use('/user', userRout);
-app.use('/pet', petRout );
+app.use('/pets', petRout );
 
 //route or endpoint
 app.get('/',(req, res) => {

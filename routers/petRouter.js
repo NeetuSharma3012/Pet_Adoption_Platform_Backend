@@ -6,13 +6,15 @@ const PetModel = require('../models/PetModel');
 const router = express.Router();
 
 //add a new pet
-router.post('/add',async(req,res) => {
+router.post('/add', async (req,res) => {
+    const {title, description, imageUrl} = req.body;
+
     try{
-        const pet = new PetModel(req.body);
-        await pet.save();
-        res.status(201).json(pet);
+        const newpet = new PetModel({title, description, imageUrl});
+        await newpet.save();
+        res.status(201).json({message: 'Pet added successfully!',pet: newpet });
     }catch(err){
-        res.status(500).json({error: err.message});
+        res.status(500).json({error: 'Failed to add pet.',details: err.message });
     }
     
 });
