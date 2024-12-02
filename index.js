@@ -1,6 +1,8 @@
 const express = require('express');
 const userRout = require('./routers/userRouter');
-const petRout = require('./routers/petRouter')
+const petRout = require('./routers/petRouter');
+const contactRout = require('./routers/contactRouter');
+const adoptRout = require('./routers/adoptionRouter');
 const cors = require('cors');
 
 //creating an express app
@@ -13,11 +15,14 @@ const port = 5001;
 
 app.use(cors({
     origin: ['http://localhost:3000']
-}));
+}))
+
 
 app.use(express.json());
 app.use('/user', userRout);
 app.use('/pets', petRout );
+app.use('/contact', contactRout);
+app.use('/adoption', adoptRout);
 
 //route or endpoint
 app.get('/',(req, res) => {
