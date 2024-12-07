@@ -21,10 +21,15 @@ const adoptionSchema = new Schema({
         required: true,
     },
 
+    
+
     submittedAt: {
         type:Date,
         default: Date.now,
-    }
+    },
+
+    
+    
 });
 
 module.exports = model('adoption',adoptionSchema);
