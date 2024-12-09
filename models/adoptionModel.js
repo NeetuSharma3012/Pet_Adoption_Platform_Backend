@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const { Schema, model } = require('../connection');
 
 const adoptionSchema = new Schema({
@@ -21,7 +22,7 @@ const adoptionSchema = new Schema({
         required: true,
     },
 
-    
+    petId: {type: mongoose.Schema.Types.ObjectId, ref: 'pets', required: true},
 
     submittedAt: {
         type:Date,

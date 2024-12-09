@@ -87,18 +87,18 @@ router.delete('/delete/:id', (req, res) => {
     });
 });
 
-router.get('/pet/:id', async (req, res) => {
-    const petId = req.params.id;  // Extract the pet ID from the URL
+// router.get('/pet/:id', async (req, res) => {
+//     const petId = req.params.id;  // Extract the pet ID from the URL
     
-    try {
-        const pet = await PetModel.findById(petId);  // Find pet by ID
-        if (!pet) {
-            return res.status(404).json({ error: 'Pet not found' });  // If pet not found, send 404
-        }
-        res.status(200).json(pet);  // Send the pet details as JSON
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to fetch pet details.', details: err.message });
-    }
-});
+//     try {
+//         const pet = await PetModel.findById(petId);  // Find pet by ID
+//         if (!pet) {
+//             return res.status(404).json({ error: 'Pet not found' });  // If pet not found, send 404
+//         }
+//         res.status(200).json(pet);  // Send the pet details as JSON
+//     } catch (err) {
+//         res.status(500).json({ error: 'Failed to fetch pet details.', details: err.message });
+//     }
+// });
 
 module.exports = router;

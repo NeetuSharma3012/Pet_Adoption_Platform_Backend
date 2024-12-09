@@ -24,20 +24,7 @@ router.post('/submit', async (req, res) => {
              
         await newRequest.save();
 
-        // const pet = await PetModel.findById(petId);
-        // if(!pet) {
-        //     return res.status(404).json({ message: 'Pet not found' });
-        // }
-
-        // //create and save the adoption request
-        // const newRequest = new Adoption({
-        //     fullName,
-        //     email,
-        //     phoneNumber,
-        //     details,
-        //     pet: petId, //link the request to the pet
-        // });
-        // await newRequest.save();
+        
 
         res.status(200).json({ message: 'Form submitted successfully'});
     } catch (err) {
@@ -46,8 +33,47 @@ router.post('/submit', async (req, res) => {
     }
 });
 
-router.get('/getall', (req, res) => {
+router.get('/getall', async (req, res) => {
     Adoption.find()
+    .then((result) => {
+        res.status(200).json(result);
+    }).catch((err) => {
+        res.status(500).json(err);
+    });
+
+    // try {
+    //     const adoptionRequests = await Adoption.aggregate([
+    //         {
+    //             $lookup: {
+    //                 from: 'pets', // Collection name in the database
+    //                 localField: 'petId', // Field in the adoption schema
+    //                 foreignField: '_id', // Field in the pet schema
+    //                 as: 'petDetails', // Output array field name
+    //             },
+    //         },
+    //         {
+    //             $unwind: '$petDetails', // Flatten the pet details
+    //         },
+    //         {
+    //             $project: {
+    //                 fullName: 1,
+    //                 email: 1,
+    //                 phoneNumber: 1,
+    //                 details: 1,
+    //                 submittedAt: 1,
+    //                 'petDetails.title': 1,
+    //                 'petDetails.imageUrl': 1,
+    //             },
+    //         },
+    //     ]);
+    //     res.status(200).json(adoptionRequests);
+    // } catch (err) {
+    //     res.status(500).json({ error: 'Failed to fetch adoption requests.', details: err.message });
+    // }
+});
+
+router.delete('/delete/:id', (req, res) => {
+    Adoption.findByIdAndDelete(req.params.id)
     .then((result) => {
         res.status(200).json(result);
     }).catch((err) => {
