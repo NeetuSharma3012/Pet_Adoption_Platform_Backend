@@ -12,25 +12,27 @@ router.post('/add', async (req, res) => {
 
     try {
         const savedPets = await PetModel.insertMany(petData);
-        res.status(201).json({message: 'Pets added successfully!', pets: savedPets });
-    }catch (err) {
-        res.status(500).json({ error: 'Failed to add pets.', details: err.message});
+        res.status(201).json({ message: 'Pets added successfully!', pets: savedPets });
+    } catch (err) {
+
+        res.status(500).json({ error: 'Failed to add pets.', details: err.message });
     }
 });
 
-router.get('/pets/:id', async (req, res) => {
+router.get('/getbyid/:id', async (req, res) => {
     const petId = req.params.id;
-  
+
     try {
-      const pet = await PetModel.findById(petId);
-      if (!pet) {
-        return res.status(404).json({ error: 'Pet not found' });
-      }
-      res.status(200).json(pet);
+        const pet = await PetModel.findById(petId);
+        if (!pet) {
+            return res.status(404).json({ error: 'Pet not found' });
+        }
+        res.status(200).json(pet);
     } catch (err) {
-      res.status(500).json({ error: 'Failed to fetch pet details.', details: err.message });
+        console.log(err);
+        res.status(500).json({ error: 'Failed to fetch pet details.', details: err.message });
     }
-  });
+});
 
 
 // router.post('/add', async (req,res) => {
@@ -43,7 +45,7 @@ router.get('/pets/:id', async (req, res) => {
 //     }catch(err){
 //         res.status(500).json({error: 'Failed to add pet.',details: err.message });
 //     }
-    
+
 // });
 
 // router.post('/add', async (req, res) => {
@@ -68,28 +70,28 @@ router.get('/pets/:id', async (req, res) => {
 // });
 
 //getall pets
-router.get('/getall',async(req,res) => {
-    try{
+router.get('/getall', async (req, res) => {
+    try {
         const pets = await PetModel.find();
         res.status(200).json(pets);
-    }catch(err){
-        res.status(500).json({error: err.message});
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
-    
+
 });
 
 router.delete('/delete/:id', (req, res) => {
     PetModel.findByIdAndDelete(req.params.id)
-    .then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        res.status(500).json(err);
-    });
+        .then((result) => {
+            res.status(200).json(result);
+        }).catch((err) => {
+            res.status(500).json(err);
+        });
 });
 
 // router.get('/pet/:id', async (req, res) => {
 //     const petId = req.params.id;  // Extract the pet ID from the URL
-    
+
 //     try {
 //         const pet = await PetModel.findById(petId);  // Find pet by ID
 //         if (!pet) {
