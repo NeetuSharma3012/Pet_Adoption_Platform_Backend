@@ -8,13 +8,11 @@ const router = express.Router();
 //add a new pet
 
 router.post('/add', async (req, res) => {
-    const petData = req.body;// Array of pets
-
-    try {
+    const petData = req.body; //Array of pets
+    try{
         const savedPets = await PetModel.insertMany(petData);
         res.status(201).json({ message: 'Pets added successfully!', pets: savedPets });
     } catch (err) {
-
         res.status(500).json({ error: 'Failed to add pets.', details: err.message });
     }
 });
