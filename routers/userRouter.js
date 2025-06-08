@@ -40,9 +40,6 @@ router.post('/authenticate',(req,res) => {
         if(result) {
             //email and passward matched
             //generate token
-
-            
-
             const {_id, email, passward} = result;
             const payload = {_id, email, passward}
 

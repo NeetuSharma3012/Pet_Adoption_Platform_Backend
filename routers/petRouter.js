@@ -69,14 +69,14 @@ router.get('/getbyid/:id', async (req, res) => {
 
 //getall pets
 router.get('/getall', async (req, res) => {
-    try {
-        const pets = await PetModel.find();
-        res.status(200).json(pets);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-
+  try {
+    const pets = await PetModel.find({ adopted: false});  // Only non-adopted pets
+    res.json(pets);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch pets' });
+  }
 });
+
 
 router.delete('/delete/:id', (req, res) => {
     PetModel.findByIdAndDelete(req.params.id)
@@ -87,18 +87,27 @@ router.delete('/delete/:id', (req, res) => {
         });
 });
 
-// router.get('/pet/:id', async (req, res) => {
-//     const petId = req.params.id;  // Extract the pet ID from the URL
+router.put('/adopt/:id', async (req, res) => {
+  try {
+    const updatedPet = await PetModel.findByIdAndUpdate(req.params.id, { adopted: true }, { new: true });
+    res.json(updatedPet);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to mark pet as adopted' });
+  }
+});
 
-//     try {
-//         const pet = await PetModel.findById(petId);  // Find pet by ID
-//         if (!pet) {
-//             return res.status(404).json({ error: 'Pet not found' });  // If pet not found, send 404
-//         }
-//         res.status(200).json(pet);  // Send the pet details as JSON
-//     } catch (err) {
-//         res.status(500).json({ error: 'Failed to fetch pet details.', details: err.message });
-//     }
-// });
+
+router.get('/adopted', async (req, res) => {
+  try {
+    const adoptedPets = await PetModel.find({ adopted: true });
+    res.json(adoptedPets);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching adopted pets' });
+  }
+});
+
+
+
+
 
 module.exports = router;

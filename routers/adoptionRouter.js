@@ -34,12 +34,14 @@ router.post('/submit', async (req, res) => {
 });
 
 router.get('/getall', async (req, res) => {
-    Adoption.find()
-    .then((result) => {
-        res.status(200).json(result);
-    }).catch((err) => {
-        res.status(500).json(err);
-    });
+  try {
+    const adoptions = await Adoption.find().populate('petId');
+    res.json(adoptions);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching adoptions", error });
+  }
+});
+
 
     // try {
     //     const adoptionRequests = await Adoption.aggregate([
@@ -70,7 +72,7 @@ router.get('/getall', async (req, res) => {
     // } catch (err) {
     //     res.status(500).json({ error: 'Failed to fetch adoption requests.', details: err.message });
     // }
-});
+
 
 router.delete('/delete/:id', (req, res) => {
     Adoption.findByIdAndDelete(req.params.id)

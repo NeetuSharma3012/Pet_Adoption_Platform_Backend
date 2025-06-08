@@ -5,7 +5,8 @@ const PetSchema = new Schema({
     description: { type: String, required: true },
     imageUrl: { type: String, required: true },
     breed: { type: String, required: false }, // Add breed
-    detailedDescription: { type: String, required: false } // Add detailedDescription
+    detailedDescription: { type: String, required: false }, // Add detailedDescription
+    adopted: { type: Boolean, default: false },
 });
 
 module.exports = model('pets', PetSchema);
