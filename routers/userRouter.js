@@ -1,6 +1,7 @@
 const express = require('express');
 const Model = require('../models/UserModel');
 const jwt = require('jsonwebtoken');
+const verifyToken = require('../middlewares/authMiddlleware');
 
 
 const router = express.Router();
@@ -40,15 +41,15 @@ router.post('/authenticate',(req,res) => {
         if(result) {
             //email and passward matched
             //generate token
-            const {_id, email, passward} = result;
-            const payload = {_id, email, passward}
+            const {_id, email, password} = result;
+            const payload = {userId: _id, email, password}
 
             const secretKey = process.env.JWT_SECRET || 'fallback_secret_key';
 
             jwt.sign(
                 payload,
                 secretKey,
-                { expiresIn: '6h' },
+                { expiresIn: '1h' },
                 (err,token) => {
                     if(err){
                         console.log(err);
@@ -78,5 +79,27 @@ router.delete('/delete/:id', (req, res) => {
         res.status(500).json(err);
     });
 });
+
+
+// router.get('/me', async (req, res) => {
+//   const token = req.headers.authorization;
+//   if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret_key');
+//     const user = await Model.findById(decoded.userId).select('-password');
+//     if (!user) return res.status(404).json({ error: 'User not found' });
+//     res.json(user);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: 'Failed to fetch user info' });
+//   }
+// });
+
+// Only protect specific routes:
+router.get('/me', verifyToken, (req, res) => {
+    res.status(200).json(req.user);
+  });
+
 
 module.exports = router;

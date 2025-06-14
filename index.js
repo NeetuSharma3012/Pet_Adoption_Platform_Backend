@@ -3,7 +3,8 @@ const userRout = require('./routers/userRouter');
 const petRout = require('./routers/petRouter');
 const contactRout = require('./routers/contactRouter');
 const adoptRout = require('./routers/adoptionRouter');
-const adminRout = require('./routers/adminRouter')
+const adminRout = require('./routers/adminRouter');
+const donationRout = require('./routers/donationRouter');
 const cors = require('cors');
 
 //creating an express app
@@ -25,6 +26,7 @@ app.use('/pets', petRout );
 app.use('/contact', contactRout);
 app.use('/adoption', adoptRout);
 app.use('/admin', adminRout);
+app.use('/donations', donationRout);
 
 //route or endpoint
 app.get('/',(req, res) => {
