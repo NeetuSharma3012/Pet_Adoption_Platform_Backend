@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const url = "mongodb+srv://riyasharma:sharma16@cluster0.7reek.mongodb.net/mydb?retryWrites=true&w=majority&appName=Cluster0";
+dotenv.config();  // Load env variables from .env
+
+const url = process.env.MONGO_URL;  // Use the env variable
 
 
 //asynchroneous function - returns promise

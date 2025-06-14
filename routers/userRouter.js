@@ -49,7 +49,7 @@ router.post('/authenticate',(req,res) => {
             jwt.sign(
                 payload,
                 secretKey,
-                { expiresIn: '1h' },
+                { expiresIn: '6h' },
                 (err,token) => {
                     if(err){
                         console.log(err);
