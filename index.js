@@ -16,8 +16,14 @@ const port = 5001;
 //middleware
 
 app.use(cors({
-    origin: ['http://localhost:3000']
-}))
+  origin: [
+    'http://localhost:3000', 
+    'https://pet-adoption-platform-delta.vercel.app'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 
 
 app.use(express.json());
